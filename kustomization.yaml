@@ -12,8 +12,6 @@ resources:
   - manifests/cronjob.yaml
 images:
   - name: CUTLASS_APP_IMAGE
-    newName: matsubokkuri/cutlass-app:3.3
-  - name: CUTLASS_BACKEND_IMAGE
-    newName: matsubokkuri/cutlass-backend:3.2
-  - name: CUTLASS_FEEDER_IMAGE
-    newName: matsubokkuri/cutlass-feeder:2.9
+    newName: europe-north1-docker.pkg.dev/my-project/cutlass-app
+    newTag: placeholder
+
