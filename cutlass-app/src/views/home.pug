@@ -1,0 +1,13 @@
+extends index
+
+block content
+    .home-image
+        img(src="data:image/jpg;base64," + ipsumImage, width="200" height="300")
+
+    .input-group
+        input(type="text" maxlength=140 placeholder="Todo ..." id="myInput")
+        button(type="button") Insert
+
+    ul.todo-list#todos
+        each item in todos
+            li= item.action

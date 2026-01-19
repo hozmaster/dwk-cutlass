@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: cutlass-app-svc
+  namespace: project
+spec:
+  type: ClusterIP
+  selector:
+    app: cutlass-app
+    tier: frontend
+  ports:
+    - name: cutlass-app
+      port: 80
+      protocol: TCP
+      targetPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cutlass-backend-svc
+  namespace: project
+spec:
+  type: ClusterIP
+  selector:
+    app: cutlass-app
+    tier: backend
+  ports:
+    - name: cutlass-backend
+      port: 80
+      protocol: TCP
+      targetPort: 3010

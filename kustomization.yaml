@@ -1,0 +1,19 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - manifests/namespace.yaml
+  - manifests/cm.yaml
+  - manifests/secret.yaml
+  - manifests/pvc.yaml
+  - manifests/deployment.yaml
+  - manifests/service.yaml
+  - manifests/gateway.yaml
+  - manifests/route.yaml
+  - manifests/cronjob.yaml
+images:
+  - name: CUTLASS_APP_IMAGE
+    newName: matsubokkuri/cutlass-app:3.3
+  - name: CUTLASS_BACKEND_IMAGE
+    newName: matsubokkuri/cutlass-backend:3.2
+  - name: CUTLASS_FEEDER_IMAGE
+    newName: matsubokkuri/cutlass-feeder:2.9

@@ -1,0 +1,29 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: cutlass-feeder
+  namespace: project
+spec:
+  schedule: "7 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: cutlass-feeder
+              image: CUTLASS_FEEDER_IMAGE
+              imagePullPolicy: IfNotPresent
+              command:
+                - /bin/cutlass-go
+              env:
+                - name : TODO_BACKEND_HOST
+                  valueFrom:
+                    configMapKeyRef:
+                      name: cutlass-config
+                      key: todo_url_host
+                - name : TODO_BACKEND_PORT
+                  valueFrom:
+                    configMapKeyRef:
+                      name: cutlass-config
+                      key: todo_url_port
+          restartPolicy: OnFailure

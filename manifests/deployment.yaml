@@ -1,0 +1,97 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cutlass-app
+  namespace: project
+  labels:
+    app: cutlass-app
+    tier: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cutlass-app
+      tier: frontend
+  template:
+    metadata:
+      name: cutlass-app
+      labels:
+        app: cutlass-app
+        tier: frontend
+    spec:
+      volumes:
+        - name: shared-storage
+          persistentVolumeClaim:
+            claimName: cutlass-pvc
+      containers:
+        - name: cutlass-app
+          image: CUTLASS_APP_IMAGE
+          imagePullPolicy: IfNotPresent
+          volumeMounts: # Mount volume
+            - name: shared-storage
+              mountPath: /usr/src/app/files
+          env:
+            - name: TODO_URL_ADDRESS
+              valueFrom:
+                configMapKeyRef:
+                  name: cutlass-config
+                  key: todo_url_address
+            - name: IPSUM_PIC_SP_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: cutlass-config
+                  key: ipsum_pic_sp_url
+            - name: APP_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: cutlass-config
+                  key: app_port
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cutlass-backend
+  namespace: project
+spec:
+  selector:
+    matchLabels:
+      app: cutlass-app
+      tier: backend
+  template:
+    metadata:
+      labels:
+        app: cutlass-app
+        tier: backend
+    spec:
+      containers:
+        - name: cutlass-backend
+          image: CUTLASS_BACKEND_IMAGE
+          env:
+            - name: BACKEND_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: cutlass-config
+                  key: backend_port
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: cutlass-config
+                  key: db_host
+            - name: DB_USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: cutlass-config
+                  key: db_username
+            - name: DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: cutlass-config
+                  key: db_name
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: cutlass-secret
+                  key: db_password
+          imagePullPolicy: IfNotPresent
+      restartPolicy: Always
+      

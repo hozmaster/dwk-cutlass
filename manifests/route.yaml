@@ -1,0 +1,35 @@
+apiVersion: gateway.networking.k8s.io/v1beta1
+kind: HTTPRoute
+metadata:
+  name: cutlass-app-route
+  namespace: project
+spec:
+  parentRefs:
+    - name: cutlass-gateway
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: cutlass-app-svc
+          namespace: project
+          port: 80
+---
+apiVersion: gateway.networking.k8s.io/v1beta1
+kind: HTTPRoute
+metadata:
+  name: cutlass-backend-route
+  namespace: project
+spec:
+  parentRefs:
+    - name: cutlass-gateway
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /todos
+      backendRefs:
+        - name: cutlass-backend-svc
+          namespace: project
+          port: 80
