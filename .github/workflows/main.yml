@@ -8,9 +8,10 @@ env:
   GKE_CLUSTER: dwk-cluster
   GKE_ZONE: europe-north1-b
   REGISTRY: europe-north1-docker.pkg.dev
-  REPOSITORY: cutlass-dwke
-  IMAGE: cutlass-feeder
-  SERVICE: cutlass-feeder
+  REPOSITORY: cutlass-app
+  IMAGE_APP: cutlass-app
+  IMAGE_BCK: cutlass-backend
+  SERVICE: cutlass-app-svc
   BRANCH: ${{ github.ref_name }}
 jobs:
   build-publish-deploy:
@@ -36,17 +37,17 @@ jobs:
           location: '${{ env.GKE_ZONE }}'
 
       - name : 'Form the image name'
-        run: echo "IMAGE_TAG=$REGISTRY/$PROJECT_ID/$REPOSITORY/$IMAGE:$BRANCH-$GITHUB_SHA" >> $GITHUB_ENV
+        run: echo "IMAGE_TAG=$REGISTRY/$PROJECT_ID/$REPOSITORY/$IMAGE_APP:$BRANCH-$GITHUB_SHA" >> $GITHUB_ENV
 
       - name: Build
         run: |
           docker buildx build --push \
-          --tag ${{ env.REGISTRY }}/${{ env.PROJECT_ID }}/cutlass-app:${{ github.sha }} \
+          --tag $IMAGE_TAG \
           -f cutlass-app/Dockerfile .
           
-          docker buildx build --push \
-          --tag ${{ env.REGISTRY }}/${{ env.PROJECT_ID }}/cutlass-backend:${{ github.sha }} \
-          -f cutlass-backend/Dockerfile .
+#          docker buildx build --push \
+#          --tag ${{ env.REGISTRY }}/${{ env.PROJECT_ID }}/cutlass-backend:${{ github.sha }} \
+#          -f cutlass-backend/Dockerfile .
 
       - name: Publish
         run: docker push $IMAGE_TAG
