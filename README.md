@@ -1,5 +1,5 @@
 
-# Exercise 3.6 The project, step 15 ()
+# Exercise 3.6 The project, step 15 (GCKE & Github actions)
 
  Task: Setup automatic deployment for the project as well (Github actions to GCKE)
 
@@ -26,10 +26,11 @@
    - Set action secrets for : GKE_SA_KEY and GKE_PROJECT-keys.
    - 
    - See KubernetesSubmissions/gcke/README.md for more details. 
-   - README.md how to set up and how to use this application
 
-### Browser
- Get Gateway ip address and enter it to browser.  
+### Verification
+  
+ Get Gateway ip address (`kubectl get gateway -n project`) and enter it to browser.
+  
   
 ### Curl 
 * Get all todo's : 'curl -X GET http://<ip_address>/todos'
