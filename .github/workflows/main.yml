@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - master
+
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
   GKE_CLUSTER: dwk-cluster
@@ -36,27 +37,31 @@ jobs:
           project_id: '${{ env.PROJECT_ID }}'
           location: '${{ env.GKE_ZONE }}'
 
-      - name : 'Form the image name'
-        run: echo "IMAGE_TAG=$REGISTRY/$PROJECT_ID/$REPOSITORY/$IMAGE_APP:$BRANCH-$GITHUB_SHA" >> $GITHUB_ENV
+      - name : 'Form the image names'
+        run: echo "IMAGE_APP_TAG=$REGISTRY/$PROJECT_ID/$REPOSITORY/$IMAGE_APP:$BRANCH-$GITHUB_SHA" >> $GITHUB_ENV
+        run: echo "IMAGE_BCK_TAG=$REGISTRY/$PROJECT_ID/$REPOSITORY/$IMAGE_BCK:$BRANCH-$GITHUB_SHA" >> $GITHUB_ENV
 
       - name: Build
         run: |
           docker buildx build --push \
-          --tag $IMAGE_TAG \
+          --tag $IMAGE_APP_TAG \
           -f cutlass-app/Dockerfile .
           
-#          docker buildx build --push \
-#          --tag ${{ env.REGISTRY }}/${{ env.PROJECT_ID }}/cutlass-backend:${{ github.sha }} \
-#          -f cutlass-backend/Dockerfile .
+          docker buildx build --push \
+          --tag  $IMAGE_BCK_TAG \
+          -f cutlass-backend/Dockerfile .
 
-      - name: Publish
-        run: docker push $IMAGE_TAG
+      - name: Publish APP
+        run: docker push $IMAGE_APP_TAG
+
+      - name: Publish BCK
+        run: docker push $IMAGE_BCK_TAG
 
       - name: Set up Kustomize
         uses: imranismail/setup-kustomize@v2.1.0
       - name: Deploy
         run: |-
-          kustomize edit set image PROJECT/IMAGE=$IMAGE_TAG
+          kustomize edit set image PROJECT/IMAGE=$IMAGE_APP_TAG
           kustomize build . | kubectl apply -f -
           kubectl rollout status deployment $SERVICE
           kubectl get services -o wide
