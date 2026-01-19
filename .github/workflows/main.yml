@@ -44,9 +44,7 @@ jobs:
 
       - name: Build
         run: |
-          docker buildx build --push \
-          --tag $IMAGE_APP_TAG \
-          -f ./cutlass-app/Dockerfile .
+          docker build --tag $IMAGE_APP_TAG ./cutlass-app
 
       #          docker buildx build --push \
       #          --tag  $IMAGE_BCK_TAG \
