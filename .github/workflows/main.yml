@@ -55,8 +55,8 @@ jobs:
       - name: Publish APP
         run: docker push $IMAGE_APP_TAG
 
-#      - name: Publish BCK
-#        run: docker push $IMAGE_BCK_TAG
+      - name: Publish BCK
+        run: docker push $IMAGE_BCK_TAG
 
       - name: Set up Kustomize
         uses: imranismail/setup-kustomize@v2.1.0
