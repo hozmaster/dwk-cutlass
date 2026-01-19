@@ -66,11 +66,10 @@ jobs:
         run: |-
           kustomize edit set image CUTLASS_APP_IMAGE=$IMAGE_APP_TAG \
             CUTLASS_BCK_IMAGE=$IMAGE_BCK_TAG \
-            CUTLASS_FDR_IMAGE=$IMAGE_FDR_TAG \
+            CUTLASS_FDR_IMAGE=$IMAGE_FDR_TAG
           
           kustomize build . | kubectl apply -f -
-          kubectl rollout status deployment/CUTLASS_APP_IMAGE --timeout=120s
-          kubectl rollout status deployment/CUTLASS_BCK_IMAGE --timeout=120s
-          kubectl rollout status deployment/CUTLASS_FDR_IMAGE --timeout=120s
+          kubectl rollout status deployment/cutlass-app --timeout=120s
+          kubectl rollout status deployment/cutlass-backend --timeout=120s
           kubectl rollout restart deployment -n project
           kubectl get services -n project -o wide
