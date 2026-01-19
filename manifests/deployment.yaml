@@ -65,7 +65,7 @@ spec:
     spec:
       containers:
         - name: cutlass-backend
-          image: CUTLASS_BACKEND_IMAGE
+          image: CUTLASS_BCK_IMAGE
           env:
             - name: BACKEND_PORT
               valueFrom:

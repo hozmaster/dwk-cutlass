@@ -15,3 +15,6 @@ images:
     newName: europe-north1-docker.pkg.dev/my-project/cutlass-app
     newTag: placeholder
 
+  - name: CUTLASS_BCK_IMAGE
+    newName: europe-north1-docker.pkg.dev/my-project/cutlass-backend
+    newTag: placeholder
