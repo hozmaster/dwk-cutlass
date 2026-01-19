@@ -69,7 +69,5 @@ jobs:
             CUTLASS_FDR_IMAGE=$IMAGE_FDR_TAG
           
           kustomize build . | kubectl apply -f -
-          kubectl rollout status deployment/cutlass-app --timeout=120s
-          kubectl rollout status deployment/cutlass-backend --timeout=120s
           kubectl rollout restart deployment -n project
           kubectl get services -n project -o wide
