@@ -11,7 +11,7 @@ spec:
         spec:
           containers:
             - name: cutlass-feeder
-              image: CUTLASS_FEEDER_IMAGE
+              image: CUTLASS_FDR_IMAGE
               imagePullPolicy: IfNotPresent
               command:
                 - /bin/cutlass-go

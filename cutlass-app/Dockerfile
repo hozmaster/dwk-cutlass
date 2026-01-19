@@ -6,8 +6,6 @@ RUN mkdir -p /usr/src/app/files
 
 COPY . .
 
-RUN ls -la
-
 RUN yarn install --frozen-lockfile
 
 EXPOSE 3000

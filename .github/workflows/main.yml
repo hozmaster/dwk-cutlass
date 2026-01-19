@@ -12,6 +12,7 @@ env:
   REPOSITORY: cutlass-app
   IMAGE_APP: cutlass-app
   IMAGE_BCK: cutlass-backend
+  IMAGE_FDR: cutlass-feeder
   SERVICE: cutlass-app-svc
   BRANCH: ${{ github.ref_name }}
 jobs:
@@ -37,15 +38,18 @@ jobs:
           project_id: '${{ env.PROJECT_ID }}'
           location: '${{ env.GKE_ZONE }}'
 
-      - name: 'Form the image names'
+      - name: 'Form the image names APP'
         run: echo "IMAGE_APP_TAG=$REGISTRY/$PROJECT_ID/$REPOSITORY/$IMAGE_APP:$BRANCH-$GITHUB_SHA" >> $GITHUB_ENV
-      - name: 'Form the image names 2'
+      - name: 'Form the image names BCK'
         run: echo "IMAGE_BCK_TAG=$REGISTRY/$PROJECT_ID/$REPOSITORY/$IMAGE_BCK:$BRANCH-$GITHUB_SHA" >> $GITHUB_ENV
+      - name: 'Form the image names FDR'
+        run: echo "IMAGE_FDR_TAG=$REGISTRY/$PROJECT_ID/$REPOSITORY/$IMAGE_FDR:$BRANCH-$GITHUB_SHA" >> $GITHUB_ENV
 
       - name: Build
         run: |
           docker build --tag $IMAGE_APP_TAG ./cutlass-app        
           docker build --tag $IMAGE_BCK_TAG ./cutlass-backend   
+          docker build --tag $IMAGE_FDR_TAG ./cutlass-feeder   
 
       - name: Publish APP
         run: docker push $IMAGE_APP_TAG
@@ -53,12 +57,17 @@ jobs:
       - name: Publish BCK
         run: docker push $IMAGE_BCK_TAG
 
+      - name: Publish FDR
+        run: docker push $IMAGE_FDR_TAG
+
       - name: Set up Kustomize
         uses: imranismail/setup-kustomize@v2.1.0
       - name: Deploy
         run: |-
           kustomize edit set image CUTLASS_APP_IMAGE=$IMAGE_APP_TAG \
-            CUTLASS_BCK_IMAGE=$IMAGE_BCK_TAG
+            CUTLASS_BCK_IMAGE=$IMAGE_BCK_TAG \
+            CUTLASS_BCK_IMAGE=$IMAGE_FDR_TAG \
+          
           kustomize build . | kubectl apply -f -
           kubectl rollout restart deployment -n project
           kubectl get services -n project -o wide

@@ -1,5 +1,7 @@
 
-# Exercise 2.10 The project, step 13 (monitoring)
+# Exercise 3.6 The project, step 15 ()
+
+ Task: Setup automatic deployment for the project as well (Github actions to GCKE)
 
 ## Folders
 
@@ -19,11 +21,15 @@
 | TODO_BACKEND_PORT | "80"                             |                                          |
 
 ### Setup
-   - See parent folder README.md how to set up and how to use this application
+
+   - Setup GCKE cluster with Gateway API. Setup artifact repositories to subprojects
+   - Set action secrets for : GKE_SA_KEY and GKE_PROJECT-keys.
+   - 
+   - See KubernetesSubmissions/gcke/README.md for more details. 
+   - README.md how to set up and how to use this application
 
 ### Browser
-
-* Open the browser into http://<ip_address>
+ Get Gateway ip address and enter it to browser.  
   
 ### Curl 
 * Get all todo's : 'curl -X GET http://<ip_address>/todos'

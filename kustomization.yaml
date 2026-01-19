@@ -18,3 +18,7 @@ images:
   - name: CUTLASS_BCK_IMAGE
     newName: europe-north1-docker.pkg.dev/my-project/cutlass-backend
     newTag: placeholder
+
+  - name: CUTLASS_FDR_IMAGE
+    newName: europe-north1-docker.pkg.dev/my-project/cutlass-feeder
+    newTag: placeholder
