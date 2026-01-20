@@ -65,7 +65,7 @@ jobs:
           kubectl create namespace $NAMESPACE || true
           kubectl config set-context --current --namespace=$NAMESPACE
           kustomize edit set namespace $NAMESPACE                   
-          kubectl delete deployment cutlass-app 
+          kubectl delete deployment --ignore-not-found=true cutlass-app 
           kustomize edit set image CUTLASS_APP_IMAGE=$IMAGE_APP_TAG \
             CUTLASS_BCK_IMAGE=$IMAGE_BCK_TAG \
             CUTLASS_FDR_IMAGE=$IMAGE_FDR_TAG
