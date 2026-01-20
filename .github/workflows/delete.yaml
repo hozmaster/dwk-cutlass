@@ -1,0 +1,47 @@
+name: Cleanups after branch deletion
+on:
+  delete:
+env:
+  PROJECT_ID: ${{ secrets.GKE_PROJECT }}
+  GKE_CLUSTER: ${{ secrets.GKE_CLUSTER }}
+  GKE_ZONE: ${{ secrets.GKE_ZONE }}
+  REGISTRY: ${{ secrets.REGISTRY }}
+  REPOSITORY: cutlass-app
+  IMAGE_APP: cutlass-app
+  IMAGE_BCK: cutlass-backend
+  IMAGE_FDR: cutlass-feeder
+  SERVICE: cutlass-app-svc
+  BRANCH: ${{ github.ref_name }}
+  NAMESPACE: ${{ github.ref_name == 'master' && 'project' || github.ref_name }}
+jobs:
+  delete-branch:
+    if: github.event.ref_type == 'branch'
+    runs-on: ubuntu:latest
+    steps:
+      - name: Show what is being deleted
+        run: |
+          echo "Deleted ref:   ${{ github.event.ref }}"
+          echo "Ref type:      ${{ github.event.ref_type }}"
+      - name: Checkout
+        uses: actions/checkout@v4
+      - uses: google-github-actions/auth@v2
+        with:
+          credentials_json: '${{ secrets.GKE_SA_KEY }}'
+      - name: 'Set up Cloud SDK'
+        uses: google-github-actions/setup-gcloud@v2
+      - name: 'Use gcloud CLI'
+        run: gcloud info
+      - name: 'Authorize login'
+        run: gcloud --quiet auth configure-docker europe-north1-docker.pkg.dev
+      - name: 'Get GKE credentials'
+        uses: 'google-github-actions/get-gke-credentials@v2'
+        with:
+          cluster_name: '${{ env.GKE_CLUSTER }}'
+          project_id: '${{ env.PROJECT_ID }}'
+          location: '${{ env.GKE_ZONE }}'
+
+      - name: Delete namespace (if exists)
+        run: |
+          kubectl delete namespace "${{ steps.vars.outputs.namespace }}" --ignore-not-found=true
+
+

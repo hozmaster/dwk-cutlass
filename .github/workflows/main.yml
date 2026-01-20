@@ -3,9 +3,9 @@ on:
   push:
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
-  GKE_CLUSTER: dwk-cluster
-  GKE_ZONE: europe-north1-b
-  REGISTRY: europe-north1-docker.pkg.dev
+  GKE_CLUSTER: ${{ secrets.GKE_CLUSTER }}
+  GKE_ZONE: ${{ secrets.GKE_ZONE }}
+  REGISTRY: ${{ secrets.REGISTRY }}
   REPOSITORY: cutlass-app
   IMAGE_APP: cutlass-app
   IMAGE_BCK: cutlass-backend
