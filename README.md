@@ -1,7 +1,8 @@
 
-# Exercise 3.6 The project, step 15 (GCKE & Github actions)
+# Exercise 3.7 The project, step 16 (GCKE & Github actions)
 
- Task: Setup automatic deployment for the project as well (Github actions to GCKE)
+ Task: Improve the deployment so that each branch creates a separate
+ environment.
 
 ## Folders
 
@@ -30,8 +31,7 @@
 ### Verification
   
  Get Gateway ip address (`kubectl get gateway -n project`) and enter it to browser.
-  
-  
+    
 ### Curl 
 * Get all todo's : 'curl -X GET http://<ip_address>/todos'
 * Add new todo to the system :  
