@@ -1,8 +1,7 @@
 
-# Exercise 3.7 The project, step 16 (GCKE & Github actions)
+# Exercise 3.8 The project, step 17 (GCKE & Github actions)
 
- Task: Improve the deployment so that each branch creates a separate
- environment.
+ Task: create a new workflow so that deleting a branch deletes the environment.
 
 ## Folders
 
@@ -30,7 +29,7 @@
 
 ### Verification
   
- Get Gateway ip address (`kubectl get gateway -n project`) and enter it to browser.
+ Create branches to Github and delete them on remote. 
     
 ### Curl 
 * Get all todo's : 'curl -X GET http://<ip_address>/todos'
