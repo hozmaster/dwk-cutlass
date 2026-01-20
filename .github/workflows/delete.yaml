@@ -1,8 +1,6 @@
-name: Cleanups after branch deletion
-
+name: K8s cleanups after branch deletion
 on:
   delete:
-
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
   GKE_CLUSTER: ${{ secrets.GKE_CLUSTER }}
@@ -14,17 +12,18 @@ env:
   IMAGE_FDR: cutlass-feeder
   SERVICE: cutlass-app-svc
   BRANCH: ${{ github.ref_name }}
-  NAMESPACE: ${{ github.ref_name == 'master' && 'project' || github.ref_name }}
+  NAMESPACE: ${{ github.event.ref }}
 
 jobs:
   delete-namespace:
     if: github.event.ref_type == 'branch'
 
-    runs-on: ubuntu:latest
+    runs-on: ubuntu-latest
 
     steps:
       - name: Show what is being deleted
         run: |
+          echo "Namespace:     $NAMESPACE"        
           echo "Deleted ref:   ${{ github.event.ref }}"
           echo "Ref type:      ${{ github.event.ref_type }}"
 
@@ -53,4 +52,4 @@ jobs:
 
       - name: Delete namespace (if exists)
         run: |
-          kubectl delete namespace "${{ steps.vars.outputs.namespace }}" --ignore-not-found=true
+          kubectl delete namespace $NAMESPACE --ignore-not-found=true
