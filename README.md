@@ -6,11 +6,11 @@
 
 ## Folders
 
-  - cutlass-app Web UI part.
-  - cutlass-backend The API layer. Handles and stores todo's. Limit max todo length to 140 chars. 
-  - cutlass-feeder : Go project to fetch a random wiki page and store it toto system
-  - k8s  YAMl manifests files for Kubernetes 
-  - postgresql  K8s setup files for poostgresql 
+  - \cutlass-app Web UI part.
+  - \cutlass-backend The API layer. Handles and stores todo's. Limit max todo length to 140 chars. 
+  - \cutlass-feeder : Go project to fetch a random wiki page and store it toto system
+  - \k8s YAMl manifests files for Kubernetes 
+  - \postgresql  K8s setup files for poostgresql 
 
 ### GKE setup
 
@@ -39,3 +39,8 @@
      postgres=# \du
     ```    
 
+### Installation
+
+  - This application should installed trough Github Actions and GCKE artifact repository. 
+
+    
