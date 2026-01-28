@@ -1,38 +1,41 @@
 
-# Exercise 3.8 The project, step 17 (GCKE & Github actions)
+# Exercise 3.10 The project, step 18 (GKE and cronjobs)
 
- Task: create a new workflow so that deleting a branch deletes the environment.
+ Task: Create now a CronJob that makes a backup of your todo database (once
+ per 24 hours) and saves it to Google Object Storage
 
 ## Folders
 
-- cutlass-app Web UI part.
-- cutlass-backend The API layer. Handles and stores todo's. Limit max todo length to 140 chars. 
-- cutlass-feeder : Go project to fetch a random wiki page and store it toto system 
+  - cutlass-app Web UI part.
+  - cutlass-backend The API layer. Handles and stores todo's. Limit max todo length to 140 chars. 
+  - cutlass-feeder : Go project to fetch a random wiki page and store it toto system
+  - k8s  YAMl manifests files for Kubernetes 
+  - postgresql  K8s setup files for poostgresql 
 
-### ENVIRONMENT variables for K8s and dev
+### GKE setup
 
-| ENV variable      | Recommend value                  | Description                              |
-|-------------------|----------------------------------|------------------------------------------|
-| TODO_URL_ADDRESS  | http://cutlass-backend-svc:80    | Address of the backend service           |
-| IPSUM_PIC_SP_URL  | https://picsum.photos            | Picsum service url                       |
-| APP_PORT          | 3000                             | Socket port which app service listen     |
-| BACKEND_PORT      | 3010                             | Socket port which backend service listen |     
-| TODO_BACKEND_HOST | cutlass-backend-svc              |                                          |
-| TODO_BACKEND_PORT | "80"                             |                                          |
+  - Setup GCKE cluster with Gateway API. 
 
-### Setup
-
-   - Setup GCKE cluster with Gateway API. Setup artifact repositories to subprojects
-   - Set action secrets for : GKE_SA_KEY and GKE_PROJECT-keys.
-   - 
-   - See KubernetesSubmissions/gcke/README.md for more details. 
-
-### Verification
+### Postgresql setup 
   
- Create branches to Github and delete them on remote. 
+  - Setup PostgreSQL at first : 
     
-### Curl 
-* Get all todo's : 'curl -X GET http://<ip_address>/todos'
-* Add new todo to the system :  
- 
-   ` curl -X POST -H 'Content-type: application/json' -d '{"todo":"Learn JavaScript"}' http://<ip_address>/todos'  `
+    ```
+    cd postgresql
+    kubectl apply -f k8s/
+    ```
+    
+    After it has finished, and it's running, setup needed user, roles and databases:
+    
+    ```
+    kubectl apply -f cutlass    
+    ```
+    
+    Login to a running pod which contains postgres-stateful instance :
+
+    ```
+     # psql -h postgres-svc -U admin -d postgres
+     postgres=# \l
+     postgres=# \du
+    ```    
+

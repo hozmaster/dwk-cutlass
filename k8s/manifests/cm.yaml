@@ -8,8 +8,8 @@ data:
   backend_port: "3010"
   ipsum_pic_sp_url: http://picsum.photos
   todo_url_address: http://cutlass-backend-svc:80
-  db_host: postgres-svc.default
-  db_name: postgres
-  db_username: admin
+  db_host: postgres-svc.postgres
+  db_name: cutlass
+  db_username: dwkmntair
   todo_url_host: cutlass-backend-svc
   todo_url_port: "80"
