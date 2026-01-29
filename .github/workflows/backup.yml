@@ -1,0 +1,55 @@
+name: Update the backup script image
+on:
+  push:
+    paths:
+      - cutlass-backup/**
+env:
+  PROJECT_ID: ${{ secrets.GKE_PROJECT }}
+  GKE_CLUSTER: ${{ secrets.GKE_CLUSTER }}
+  GKE_ZONE: ${{ secrets.GKE_ZONE }}
+  REGISTRY: ${{ secrets.REGISTRY }}
+  REPOSITORY: cutlass-backup
+  IMAGE_BACKUP: cutlass-backup
+  BRANCH: ${{ github.ref_name }}
+  NAMESPACE: ${{ github.ref_name == 'master' && 'project' || github.ref_name }}
+jobs:
+  build-publish-deploy:
+    name: Build, Publish and Deploy backup script
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - uses: google-github-actions/auth@v2
+        with:
+          credentials_json: '${{ secrets.GKE_SA_KEY }}'
+      - name: 'Set up Cloud SDK'
+        uses: google-github-actions/setup-gcloud@v2
+      - name: 'Use gcloud CLI'
+        run: gcloud info
+      - name: 'Authorize login'
+        run: gcloud --quiet auth configure-docker europe-north1-docker.pkg.dev
+      - name: 'Get GKE credentials'
+        uses: 'google-github-actions/get-gke-credentials@v2'
+        with:
+          cluster_name: '${{ env.GKE_CLUSTER }}'
+          project_id: '${{ env.PROJECT_ID }}'
+          location: '${{ env.GKE_ZONE }}'
+
+      - name: 'Form the image name for BACKUP'
+        run: echo "IMAGE_APP_TAG=$REGISTRY/$PROJECT_ID/$REPOSITORY/$IMAGE_BCKUP:$BRANCH-$GITHUB_SHA" >> $GITHUB_ENV
+
+      - name: Build
+        run: |
+          docker build --tag $IMAGE_BACKUP_TAG ./cutlass-backup   
+
+      - name: Publish APP
+        run: docker push $IMAGE_BACKUP_TAG
+
+      - name: Set up Kustomize
+        uses: imranismail/setup-kustomize@v2.1.0
+      - name: Deploy
+        run: |-
+          kubectl create namespace $NAMESPACE || true
+          kubectl config set-context --current --namespace=$NAMESPACE
+          kustomize edit set namespace $NAMESPACE                   
+          kustomize edit set image CUTLASS_BACKUP_IMAGE=$IMAGE_BACKUP_TAG
