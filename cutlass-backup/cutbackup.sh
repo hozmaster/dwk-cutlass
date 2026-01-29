@@ -7,4 +7,3 @@ then
   echo "Not sending the dump actually anywhere"
   # curl -F ‘data=@/usr/src/app/backup.sql’ https://somewhere
 fi
-
