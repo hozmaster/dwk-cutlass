@@ -36,7 +36,7 @@ jobs:
           location: '${{ env.GKE_ZONE }}'
 
       - name: 'Form the image name for BACKUP'
-        run: echo "IMAGE_BACKUP_TAG=$REGISTRY/$PROJECT_ID/$REPOSITORY/$IMAGE_BCKUP:$BRANCH-$GITHUB_SHA" >> $GITHUB_ENV
+        run: echo "IMAGE_BACKUP_TAG=$REGISTRY/$PROJECT_ID/$REPOSITORY/$IMAGE_BACKUP:$BRANCH-$GITHUB_SHA" >> $GITHUB_ENV
 
       - name: Build
         run: |
