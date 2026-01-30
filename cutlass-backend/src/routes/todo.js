@@ -7,6 +7,7 @@ router.get ('/', async (req, res) => {
     res.status(200).send(``);
 });
 
+// Listen incoming post request
 router.post('/todos',  express.json(), async (req, res) => {
     if (req.body && req.body.todo) {
         const todo = req.body.todo;

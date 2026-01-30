@@ -12,7 +12,7 @@ env:
   REGISTRY: ${{ secrets.REGISTRY }}
   REPOSITORY_APP: cutlass-app
   REPOSITORY_BCK: cutlass-backup
-  REPOSITORY_FDR: cutlass-FDR
+  REPOSITORY_FDR: cutlass-feeder
   IMAGE_APP: cutlass-app
   IMAGE_BCK: cutlass-backend
   IMAGE_FDR: cutlass-feeder
