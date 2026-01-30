@@ -40,5 +40,4 @@ const setupDatabase = async () => {
     }
 }
 
-
 module.exports = {setupDatabase, gPool};
