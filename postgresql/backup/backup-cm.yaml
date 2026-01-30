@@ -4,4 +4,4 @@ metadata:
   name: backup-cm
   namespace: project
 data:
-  backup_pg_url: "postgres://dwkmntair:DB_PASSWORD@postgres-svc.postgres:5432/cutlass"
+  backup_pg_url: "postgres://dwkmntair:DB_PASSWORD@postgres-svc.postgres:5432/cutlass2"
