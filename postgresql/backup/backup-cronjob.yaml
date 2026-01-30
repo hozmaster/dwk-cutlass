@@ -1,0 +1,29 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: backup-cronjob
+  namespace: project
+spec:
+  schedule: "43 2 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: backup-cronjob
+              image: europe-north1-docker.pkg.dev/dwk-gke-484109/cutlass-backup/cutlass-backup:master-6cceee6f22b9826f0d549c6c2322537cd40cab00
+              imagePullPolicy: IfNotPresent
+              command: [ "/bin/sh", "-c" ]
+              args:    ["exec /bin/cutbackup.sh"]
+              env:
+                - name: URL
+                  valueFrom:
+                    configMapKeyRef:
+                      name: backup-cm
+                      key: backup_pg_url
+                - name: DB_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: cutlass-secret
+                      key: db_password
+          restartPolicy: OnFailure
