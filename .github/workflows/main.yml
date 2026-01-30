@@ -43,11 +43,11 @@ jobs:
           location: '${{ env.GKE_ZONE }}'
 
       - name: 'Form the image names APP'
-        run: echo "IMAGE_APP_TAG=$REGISTRY/$PROJECT_ID/REPOSITORY_APP/$IMAGE_APP:$BRANCH-$GITHUB_SHA" >> $GITHUB_ENV
+        run: echo "IMAGE_APP_TAG=$REGISTRY/$PROJECT_ID/$REPOSITORY_APP/$IMAGE_APP:$BRANCH-$GITHUB_SHA" >> $GITHUB_ENV
       - name: 'Form the image names BCK'
-        run: echo "IMAGE_BCK_TAG=$REGISTRY/$PROJECT_ID/REPOSITORY_BCK/$IMAGE_BCK:$BRANCH-$GITHUB_SHA" >> $GITHUB_ENV
+        run: echo "IMAGE_BCK_TAG=$REGISTRY/$PROJECT_ID/$REPOSITORY_BCK/$IMAGE_BCK:$BRANCH-$GITHUB_SHA" >> $GITHUB_ENV
       - name: 'Form the image names FDR'
-        run: echo "IMAGE_FDR_TAG=$REGISTRY/$PROJECT_ID/REPOSITORY_FDR/$IMAGE_FDR:$BRANCH-$GITHUB_SHA" >> $GITHUB_ENV
+        run: echo "IMAGE_FDR_TAG=$REGISTRY/$PROJECT_ID/$REPOSITORY_FDR/$IMAGE_FDR:$BRANCH-$GITHUB_SHA" >> $GITHUB_ENV
 
       - name: Build
         run: |
