@@ -3,6 +3,7 @@ const router = require('express').Router();
 const {insertTodo, getAllTodos} = require("../library/todo");
 
 
+// Listen incoming post request
 router.get ('/', async (req, res) => {
     res.status(200).send(``);
 });
