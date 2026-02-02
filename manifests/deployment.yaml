@@ -25,7 +25,7 @@ spec:
             claimName: cutlass-pvc
       containers:
         - name: cutlass-app
-          image: europe-north1-docker.pkg.dev/dwk-gke-484109/cutlass-app/cutlass-backend:master-d7ed13fcc987f2b84a31d63c6f8d20f08df25558
+          image: CUTLASS_APP_IMAGE
           imagePullPolicy: IfNotPresent
           volumeMounts: # Mount volume
             - name: shared-storage
@@ -65,7 +65,7 @@ spec:
     spec:
       containers:
         - name: cutlass-backend
-          image: europe-north1-docker.pkg.dev/dwk-gke-484109/cutlass-backup/cutlass-backend:master-d7ed13fcc987f2b84a31d63c6f8d20f08df25558
+          image: CUTLASS_BCK_IMAGE
           env:
             - name: BACKEND_PORT
               valueFrom:
