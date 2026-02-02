@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: db-table-deployment
-  namespace: chapelle
+  name: db-table-job
+  namespace: cutlass
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: db-table-deployment
+      app: db-table-job
   template:
     metadata:
-      name: db-table-deployment
+      name: db-table-job
       labels:
-        app: db-table-deployment
+        app: db-table-job
     spec:
       containers:
-        - name: db-table-deployment
+        - name: db-table-job
           image: postgres:18.1
           imagePullPolicy: IfNotPresent
           command:
@@ -30,7 +30,7 @@ spec:
             - name: PGPASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: chapelle-secrets
+                  name: cutlass-secrets
                   key: db_password
           volumeMounts:
             - mountPath: /sql

@@ -18,7 +18,7 @@ env:
   IMAGE_FDR: cutlass-feeder
   SERVICE: cutlass-app-svc
   BRANCH: ${{ github.ref_name }}
-  NAMESPACE: ${{ github.ref_name == 'master' && 'project' || github.ref_name }}
+  NAMESPACE: 'project'
 jobs:
   build-publish-deploy:
     name: Build, Publish and Deploy

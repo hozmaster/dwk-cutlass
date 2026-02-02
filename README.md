@@ -28,19 +28,34 @@
     After it has finished, and it's running, setup needed user, roles and databases:
     
     ```
-    kubectl apply -f cutlass    
+    cd ..
+    cd manifest/db-init
+    kubectl apply -f database-init-sql
+    kubectl apply -f database-job-sql.yaml
     ```
     
-    Login to a running pod which contains postgres-stateful instance :
+    Re-run a githun which applies kustomization-script for         
+    And after create needed tables what is needed the cutlass-service:
+  
+    ```
+    kubectl create ns cutlass
+    kubectl apply -f structure-init-sql.yaml
+    kubectl apply -f structure-init-job.yaml
+    ```
+
+    Login to a running to the postgres-svc pod to check status of installation :
 
     ```
      # psql -h postgres-svc -U admin -d postgres
+    
      postgres=# \l
      postgres=# \du
+     postgres=# \c cutlass
+     postgres=# \dt
     ```    
 
 ### Installation
 
-  - This application should installed trough Github Actions and GCKE artifact repository. 
+  - This application should install trough Github Actions and GCKE artifact repository. 
 
     
