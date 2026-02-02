@@ -56,6 +56,9 @@
 
 ### Installation
 
-  - This application should install trough Github Actions and GCKE artifact repository. 
+  - This application can be installed only trough Github Actions and GCKE artifact repository. 
 
-    
+### The Task setup and verifying it:
+
+   - Trigger the build installation and making a change empty in the \cutlass-backup-folder.  
+   -  

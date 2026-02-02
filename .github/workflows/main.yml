@@ -2,9 +2,9 @@ name: Release application
 on:
   push:
     paths:
-      - cutlass-app/**
-      - cutlass-backend/**
-      - cutlass-feeder/**
+      - ../../service/cutlass-app/**
+      - ../../service/cutlass-backend/**
+      - ../../service/cutlass-feeder/**
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
   GKE_CLUSTER: ${{ secrets.GKE_CLUSTER }}

@@ -26,9 +26,8 @@ spec:
                 secretKeyRef:
                   name: cutlass-secret
                   key: db_password
-<<            - name: SIGNED_UPLOAD_URL
+            - name: SIGNED_UPLOAD_URL
               valueFrom:
                 configMapKeyRef:
                   name: backup-cm
                   key: signed_url
->>

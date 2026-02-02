@@ -2,7 +2,7 @@ name: Update the backup script image
 on:
   push:
     paths:
-      - cutlass-backup/**
+      - ../../backup/cutlass-backup/**
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
   GKE_CLUSTER: ${{ secrets.GKE_CLUSTER }}
@@ -11,7 +11,7 @@ env:
   REPOSITORY: cutlass-backup
   IMAGE_BACKUP: cutlass-backup
   BRANCH: ${{ github.ref_name }}
-  NAMESPACE: ${{ github.ref_name == 'master' && 'project' || github.ref_name }}
+  NAMESPACE: 'project'
 jobs:
   build-publish-deploy:
     name: Build, Publish and Deploy backup script
