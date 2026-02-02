@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db-table-deployment
+  namespace: chapelle
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: db-table-deployment
+  template:
+    metadata:
+      name: db-table-deployment
+      labels:
+        app: db-table-deployment
+    spec:
+      containers:
+        - name: db-table-deployment
+          image: postgres:18.1
+          imagePullPolicy: IfNotPresent
+          command:
+            - "sh"
+            - "-c"
+            - |
+              until pg_isready -h postgres-svc.postgres -U chmntair -d chapelle; do sleep 2; done
+              for f in /sql/*.sql; do
+                psql -v ON_ERROR_STOP=1 -h postgres-svc.postgres -U chmntair -d chapelle -f "$f"
+              done
+          env:
+            - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: chapelle-secrets
+                  key: db_password
+          volumeMounts:
+            - mountPath: /sql
+              name: sql
+      restartPolicy: Always
+      volumes:
+        - name: sql
+          configMap:
+            name: database-table-init-sqls

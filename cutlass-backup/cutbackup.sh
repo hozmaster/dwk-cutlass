@@ -9,7 +9,7 @@ then
   echo "Dump created ($(du -h /usr/src/app/backup.sql | cut -f1))"
   echo "Uploading the bucket bucket ..."
 
-  curl -X PUT \
+  curl -v -X PUT \
          --upload-file /usr/src/app/backup.sql \
          -H "Content-Type: application/sql" \
          "$SIGNED_UPLOAD_URL"

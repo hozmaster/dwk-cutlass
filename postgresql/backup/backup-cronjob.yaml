@@ -4,14 +4,14 @@ metadata:
   name: backup-cronjob
   namespace: project
 spec:
-  schedule: "43 2 * * *"
+  schedule: "14 * * * *"
   jobTemplate:
     spec:
       template:
         spec:
           containers:
             - name: backup-cronjob
-              image: europe-north1-docker.pkg.dev/dwk-gke-484109/cutlass-backup/cutlass-backup:master-6cceee6f22b9826f0d549c6c2322537cd40cab00
+              image: europe-north1-docker.pkg.dev/dwk-gke-484109/cutlass-backup/cutlass-backup:backup-04b27166427994322cdcc612cfb088e5c0d8298f
               imagePullPolicy: IfNotPresent
               command: [ "/bin/sh", "-c" ]
               args:    ["exec /bin/cutbackup.sh"]
@@ -26,4 +26,9 @@ spec:
                     secretKeyRef:
                       name: cutlass-secret
                       key: db_password
+                - name: SIGNED_UPLOAD_URL
+                  valueFrom:
+                    configMapKeyRef:
+                      name: backup-cm
+                      key: signed_url
           restartPolicy: OnFailure
