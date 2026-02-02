@@ -51,9 +51,9 @@ jobs:
 
       - name: Build
         run: |
-          docker build --tag $IMAGE_APP_TAG ./cutlass-app        
-          docker build --tag $IMAGE_BCK_TAG ./cutlass-backend   
-          docker build --tag $IMAGE_FDR_TAG ./cutlass-feeder   
+          docker build --tag $IMAGE_APP_TAG service/cutlass-app        
+          docker build --tag $IMAGE_BCK_TAG service/cutlass-backend   
+          docker build --tag $IMAGE_FDR_TAG service/cutlass-feeder   
 
       - name: Publish APP
         run: docker push $IMAGE_APP_TAG
@@ -75,6 +75,6 @@ jobs:
           kustomize edit set image CUTLASS_APP_IMAGE=$IMAGE_APP_TAG \
             CUTLASS_BCK_IMAGE=$IMAGE_BCK_TAG \
             CUTLASS_FDR_IMAGE=$IMAGE_FDR_TAG
-          kustomize build . | kubectl apply -f -
+          kustomize build service/kustomization.yaml | kubectl apply -f -
           kubectl rollout restart deployment 
           kubectl get services -n project -o wide
