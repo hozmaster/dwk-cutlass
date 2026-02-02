@@ -77,7 +77,7 @@ spec:
                 configMapKeyRef:
                   name: cutlass-config
                   key: db_host
-            - name: DB_USERNAME
+            - name: DB_USER
               valueFrom:
                 configMapKeyRef:
                   name: cutlass-config

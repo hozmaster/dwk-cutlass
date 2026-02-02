@@ -22,15 +22,15 @@ spec:
             - "sh"
             - "-c"
             - |
-              until pg_isready -h postgres-svc.postgres -U chmntair -d chapelle; do sleep 2; done
+              until pg_isready -h postgres-svc.postgres -U dwkmntair -d cutlass; do sleep 2; done
               for f in /sql/*.sql; do
-                psql -v ON_ERROR_STOP=1 -h postgres-svc.postgres -U chmntair -d chapelle -f "$f"
+                psql -v ON_ERROR_STOP=1 -h postgres-svc.postgres -U dwkmntair -d cutlass -f "$f"
               done
           env:
             - name: PGPASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: cutlass-secrets
+                  name: cutlass-secret
                   key: db_password
           volumeMounts:
             - mountPath: /sql

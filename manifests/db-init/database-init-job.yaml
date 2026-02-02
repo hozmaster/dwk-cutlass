@@ -15,7 +15,7 @@ spec:
             - "sh"
             - "-c"
             - |
-              until pg_isready -h postgres-svc.postgres -U admin -d postgres; do sleep 2; done
+              until pg_isready -h postgres-svc.postgres -U admin -d postgresdb; do sleep 2; done
               for f in /sql/*.sql; do
                 psql -v ON_ERROR_STOP=1 -h postgres-svc.postgres -U admin -d postgres -f "$f"
               done
