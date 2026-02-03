@@ -50,10 +50,14 @@ jobs:
         uses: imranismail/setup-kustomize@v2.1.0
       - name: Deploy
         run: |-
-          kubectl create namespace $NAMESPACE || true
-          kubectl config set-context --current --namespace=$NAMESPACE
-          kubectl kustomize backup
+          kubectl create namespace "$NAMESPACE" || true
+          kubectl config set-context --current --namespace="$NAMESPACE"
+          
+          cd backup
+          
           kustomize edit set namespace $NAMESPACE                   
-          kustomize edit set image CUTLASS_BACKUP_IMAGE=$IMAGE_BACKUP_TAG
-          kustomize build --path backup/kustomization.yaml | kubectl apply -f -
-          kubectl get cronjob -n project -o wide
+          kustomize edit set image CUTLASS_BACKUP_IMAGE="$IMAGE_BACKUP_TAG"
+          
+          kustomize build . | kubectl apply -f -
+          
+          kubectl get cronjob -n "$NAMESPACE" -o wide
