@@ -4,7 +4,7 @@ metadata:
   name: backup-cronjob
   namespace: project
 spec:
-  schedule: "14 * * * *"
+  schedule: "14 3 * * *"
   jobTemplate:
     spec:
       template:

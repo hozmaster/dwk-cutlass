@@ -68,13 +68,17 @@ jobs:
         uses: imranismail/setup-kustomize@v2.1.0
       - name: Deploy
         run: |-
-          kubectl create namespace $NAMESPACE || true
-          kubectl config set-context --current --namespace=$NAMESPACE
-          kustomize edit set namespace $NAMESPACE                   
-          kubectl delete deployment --ignore-not-found=true cutlass-app 
-          kustomize edit set image CUTLASS_APP_IMAGE=$IMAGE_APP_TAG \
-            CUTLASS_BCK_IMAGE=$IMAGE_BCK_TAG \
-            CUTLASS_FDR_IMAGE=$IMAGE_FDR_TAG
-          kustomize build service/kustomization.yaml | kubectl apply -f -
+          kubectl create namespace "$NAMESPACE" || true
+          kubectl config set-context --current --namespace="$NAMESPACE"
+          
+          cd service
+                   
+          kustomize edit set namespace "$NAMESPACE"                   
+         
+          kustomize edit set image CUTLASS_APP_IMAGE="$IMAGE_APP_TAG" \
+            CUTLASS_BCK_IMAGE="$IMAGE_BCK_TAG" \
+            CUTLASS_FDR_IMAGE="$IMAGE_FDR_TAG"
+          
+          kustomize build . | kubectl apply -f -
           kubectl rollout restart deployment 
-          kubectl get services -n project -o wide
+          kubectl get services -n "$NAMESPACE" -o wide

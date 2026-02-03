@@ -4,5 +4,5 @@ metadata:
   name: backup-cm
   namespace: project
 data:
-  backup_pg_url: "postgres://dwkmntair:DB_PASSWORD@postgres-svc.postgres:5432/cutlass2"
+  backup_pg_url: "postgres://dwkmntair:DB_PASSWORD@postgres-svc.postgres:5432/cutlass"
   signed_url: "https://storage.googleapis.com/dwk-cutlass-backup-2026/pg_backup_2026-01-30.sql?x-goog-signature=369e709ff55d27abbcdaeb686a53ecc286cbc4fdc10c568be09f3120a4704a7e7c7dc97c6444ffabbbb4f88c6d803b520e149f2f1bd5f462c8a7380879300dddb9d08f855217dad8157c6718d55d1b6e732045317de65b6b2e346099ae9685452dba39a22839b22d3144c071cd11ef60fc43090410f73021cd47f41ca3bfdcac723601ce09b3dbbf6656136a45913ab587e99a8197c0eaeec1729e8f52f04c5b82236ba940369078fa6e327fd6c8221abb03c7074986e8ebb101502a742469fc48f561711e85bdbfaf454a892ec9c418525f8fe4e33d59ef71f0e6039a93008f3e3d5eba386d68e5eecd1cb7e9895f41dfc2701e7c2f0f3af65aff56e5c1b252&x-goog-algorithm=GOOG4-RSA-SHA256&x-goog-credential=service-account%40dwk-gke-484109.iam.gserviceaccount.com%2F20260130%2Feurope-north1%2Fstorage%2Fgoog4_request&x-goog-date=20260130T161252Z&x-goog-expires=604800&x-goog-signedheaders=content-type%3Bhost"
