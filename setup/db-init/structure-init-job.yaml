@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db-table-job
+  namespace: project
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: db-table-job
+  template:
+    metadata:
+      name: db-table-job
+      labels:
+        app: db-table-job
+    spec:
+      containers:
+        - name: db-table-job
+          image: postgres:18.1
+          imagePullPolicy: IfNotPresent
+          command:
+            - "sh"
+            - "-c"
+            - |
+              until pg_isready -h postgres-svc.postgres -U dwkmntair -d cutlass; do sleep 2; done
+              for f in /sql/*.sql; do
+                psql -v ON_ERROR_STOP=1 -h postgres-svc.postgres -U dwkmntair -d cutlass -f "$f"
+              done
+          env:
+            - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: cutlass-secret
+                  key: db_password
+          volumeMounts:
+            - mountPath: /sql
+              name: sql
+      restartPolicy: Never
+      volumes:
+        - name: sql
+          configMap:
+            name: database-table-init-sqls

@@ -1,0 +1,31 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: backup-job
+  namespace: project
+spec:
+  template:
+    spec:
+      containers:
+        - name: backup-job
+          image: europe-north1-docker.pkg.dev/dwk-gke-484109/cutlass-backup/cutlass-backup:backup-04b27166427994322cdcc612cfb088e5c0d8298f
+          command: [ "/bin/sh", "-c" ]
+          args:    ["exec /bin/cutbackup.sh"]
+          env:
+            - name: URL
+              valueFrom:
+                configMapKeyRef:
+                  name: backup-cm
+                  key: backup_pg_url
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: cutlass-secret
+                  key: db_password
+            - name: SIGNED_UPLOAD_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: backup-cm
+                  key: signed_url
+      restartPolicy: Never
+  backoffLimit: 1
