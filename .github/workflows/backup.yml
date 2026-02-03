@@ -53,3 +53,5 @@ jobs:
           kubectl config set-context --current --namespace=$NAMESPACE
           kustomize edit set namespace $NAMESPACE                   
           kustomize edit set image CUTLASS_BACKUP_IMAGE=$IMAGE_BACKUP_TAG
+          kustomize build backup/kustomization.yaml | kubectl apply -f -
+          kubectl get cronjob -n project -o wide
