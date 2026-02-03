@@ -44,7 +44,7 @@ jobs:
 
       - name: Publish APP
         run: docker push $IMAGE_BACKUP_TAG
-<§
+
       - name: Set up Kustomize
         uses: imranismail/setup-kustomize@v2.1.0
       - name: Deploy
