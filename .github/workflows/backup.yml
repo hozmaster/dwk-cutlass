@@ -51,6 +51,7 @@ jobs:
         run: |-
           kubectl create namespace $NAMESPACE || true
           kubectl config set-context --current --namespace=$NAMESPACE
+          kubectl kustomize backup
           kustomize edit set namespace $NAMESPACE                   
           kustomize edit set image CUTLASS_BACKUP_IMAGE=$IMAGE_BACKUP_TAG
           kustomize build backup/kustomization.yaml | kubectl apply -f -
