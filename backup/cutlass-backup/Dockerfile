@@ -12,3 +12,4 @@ RUN apt-get update -qq && \
 RUN mkdir -p /usr/src/app
 
 COPY cutbackup.sh /bin/cutbackup.sh
+
