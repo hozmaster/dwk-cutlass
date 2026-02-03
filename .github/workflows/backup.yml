@@ -2,6 +2,7 @@ name: Update the backup script image
 on:
   push:
     paths:
+      - .github/workflows/backup.yml
       - backup/cutlass-backup/**
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
