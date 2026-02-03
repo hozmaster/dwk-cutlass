@@ -16,3 +16,4 @@ then
 
   echo "Upload finished (check bucket manually)"
 fi
+

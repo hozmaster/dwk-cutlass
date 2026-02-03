@@ -44,7 +44,7 @@ jobs:
 
       - name: Publish APP
         run: docker push $IMAGE_BACKUP_TAG
-
+<§
       - name: Set up Kustomize
         uses: imranismail/setup-kustomize@v2.1.0
       - name: Deploy
@@ -54,5 +54,5 @@ jobs:
           kubectl kustomize backup
           kustomize edit set namespace $NAMESPACE                   
           kustomize edit set image CUTLASS_BACKUP_IMAGE=$IMAGE_BACKUP_TAG
-          kustomize build kustomization.yaml | kubectl apply -f -
+          kustomize build --path backup/kustomization.yaml | kubectl apply -f -
           kubectl get cronjob -n project -o wide
