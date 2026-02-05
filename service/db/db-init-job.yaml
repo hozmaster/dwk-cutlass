@@ -1,42 +1,42 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: Pod
 metadata:
-  name: db-create-tables-job
+  name: db-create-tables-task
   namespace: project
 spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: db-create-tables-job
-  template:
-    metadata:
-      name: db-create-tables-job
-      labels:
-        app: db-create-tables-job
-    spec:
-      containers:
-        - name: db-create-tables-job
-          image: postgres:18.1
-          imagePullPolicy: IfNotPresent
-          command:
-            - "sh"
-            - "-c"
-            - |
-              until pg_isready -h postgres-svc.postgres -U dwkmntair -d cutlass; do sleep 2; done
-              for f in /sql/*.sql; do
-                psql -v ON_ERROR_STOP=1 -h postgres-svc.postgres -U dwkmntair -d cutlass -f "$f"
-              done
-          env:
-            - name: PGPASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: cutlass-secret
-                  key: db_password
-          volumeMounts:
-            - mountPath: /sql
-              name: sql
-      restartPolicy: Always
-      volumes:
-        - name: sql
-          configMap:
-            name: db-create-tables-sqls
+  containers:
+    - name: db-create-tables-job
+      image: postgres:18.1
+      imagePullPolicy: IfNotPresent
+      command:
+        - "sh"
+        - "-c"
+        - |
+          until pg_isready -h postgres-svc.postgres -U $USERNAME -d $DATABASE; do sleep 2; done
+          for f in /sql/*.sql; do
+            psql -v ON_ERROR_STOP=1 -h postgres-svc.postgres -U $USERNAME -d $DATABASE -f "$f"
+          done
+      env:
+        - name: PGPASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: cutlass-secret
+              key: db_password
+        - name: USERNAME
+          valueFrom:
+            configMapKeyRef:
+              name: cutlass-config
+              key: db_username
+        - name: DATABASE
+          valueFrom:
+            configMapKeyRef:
+              name: cutlass-config
+              key: db_name
+      volumeMounts:
+        - mountPath: /sql
+          name: sql
+  restartPolicy: Never
+  volumes:
+    - name: sql
+      configMap:
+        name: db-create-tables-sqls
