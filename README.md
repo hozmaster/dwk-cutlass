@@ -41,7 +41,7 @@
 
   This application can be installed only trough Github Actions and GCKE artifact repository. Trigger the installation procedure when these are ready from making a change to single file inside of the \service-folder.
 
-  After github actions has run successfully, build table structures running locally next commands:
+  After GitHub actions has run successfully, build table structures running locally next commands:
     
 ```
     cd \service\db-init
@@ -50,16 +50,6 @@
 ```
     
 
-### The Task setup and verifying it:
+### The task setup and verifying it:
 
-   Start the installation by making one change to a file in the \cutlass-backup folder.
-
-   Create a SIGNED_URL for the backup scripts with command:
-
-```
-$ gsutil signurl -m PUT -d 168h -c application/sql dwk-gke-XXXXX-XXXXX.json gs://dwk-cutlass-<bucket_name>/pg_backup_$(date +%Y-%m-%d).sql 
-```
-    
-   Update created signed to \backup\manifest\backuo-cm.yaml and update config with kubectl apply.
-
-   Check that the backup-cronjob is uo and running and a feeder job is add new rows to the db.
+    You find the command `kubectl top pods -n project/postgres` useful.
