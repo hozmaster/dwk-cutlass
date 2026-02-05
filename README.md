@@ -1,5 +1,5 @@
 
-# Exercise 3.11 The project, step 19 (GKE and cronjobs)
+# Exercise 3.11 The project, step 19 (Resources and limits)
 
  Task: Set sensible resource requests and limits for the project.
 
