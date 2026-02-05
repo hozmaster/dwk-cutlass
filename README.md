@@ -1,8 +1,7 @@
 
-# Exercise 3.10 The project, step 18 (GKE and cronjobs)
+# Exercise 3.11 The project, step 19 (GKE and cronjobs)
 
- Task: Create now a CronJob that makes a backup of your todo database (once
- per 24 hours) and saves it to Google Object Storage
+ Task: Set sensible resource requests and limits for the project.
 
 ## Folders
   - \services       Contains base applications for the cutlass-project   
@@ -11,7 +10,7 @@
     - \cutlass-feeder : Go project to fetch a random wiki page and store it toto system
     - manifests      Kubernetes files to install and set up the project to the cluster  
   - \backup    Backup cronjob related files
-    - cutlass-backup    Docker iamge for the backup cronjob manifest
+    - cutlass-backup    Docker image for the backup cronjob manifest
   - \setup     PostgreSQL and database initializing files
 
 ### GKE setup
