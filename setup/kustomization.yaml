@@ -7,6 +7,6 @@ resources:
   - manifests/service.yaml
   - manifests/stateful.yaml
   - db-init/database-init-sql.yaml
-  - db-init/database-init-sql.yaml
-  - db-init/database-init-sql.yaml
   - db-init/database-init-job.yaml
+  - ../service/db/db-init-sql.yaml
+  - ../service/db/db-init-job.yaml

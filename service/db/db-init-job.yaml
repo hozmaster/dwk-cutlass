@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: db-table-job
+  name: db-create-tables-job
   namespace: project
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: db-table-job
+      app: db-create-tables-job
   template:
     metadata:
-      name: db-table-job
+      name: db-create-tables-job
       labels:
-        app: db-table-job
+        app: db-create-tables-job
     spec:
       containers:
-        - name: db-table-job
+        - name: db-create-tables-job
           image: postgres:18.1
           imagePullPolicy: IfNotPresent
           command:
@@ -35,8 +35,8 @@ spec:
           volumeMounts:
             - mountPath: /sql
               name: sql
-      restartPolicy: Never
+      restartPolicy: Always
       volumes:
         - name: sql
           configMap:
-            name: database-table-init-sqls
+            name: db-create-tables-sqls

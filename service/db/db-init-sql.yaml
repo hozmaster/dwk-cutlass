@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: database-table-init-sqls
+  name: db-create-tables-sqls
   namespace: project
 data:
   01-create-todo-table.sql: |
