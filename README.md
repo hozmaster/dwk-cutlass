@@ -46,7 +46,7 @@
     
 ```
     cd \service\db-init
-    kubectl apply -f db-init-sqö.yaml
+    kubectl apply -f db-init-sql.yaml
     kubectl apply -f db-init-job.yaml
 ```
     

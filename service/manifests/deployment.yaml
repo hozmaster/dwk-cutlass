@@ -46,6 +46,13 @@ spec:
                 configMapKeyRef:
                   name: cutlass-config
                   key: app_port
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "25Mi"
+            limits:
+              cpu: "150m"
+              memory: "50Mi"
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -93,5 +100,12 @@ spec:
                   name: cutlass-secret
                   key: db_password
           imagePullPolicy: IfNotPresent
+      resources:
+        requests:
+          memory: "25Mi"
+          cpu: "250m"
+        limits:
+          cpu: "150m"
+          memory: "100Mi"
       restartPolicy: Always
       

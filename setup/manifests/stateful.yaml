@@ -17,10 +17,6 @@ spec:
       containers:
         - name: postgres
           image: postgres:18.1
-#          resources:
-#            limits:
-#              cpu: "150m"
-#              memory: "50Mi"
           imagePullPolicy: "IfNotPresent"
           ports:
             - name: web
@@ -37,6 +33,13 @@ spec:
           volumeMounts:
             - name: pgdata
               mountPath: /data
+      resources:
+        requests:
+          cpu: "250m"
+          memory: "25Mi"
+        limits:
+          cpu: "150m"
+          memory: "150Mi"
   volumeClaimTemplates:
     - metadata:
         name: pgdata
