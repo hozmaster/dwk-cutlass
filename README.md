@@ -20,7 +20,7 @@
   
 ### Postgresql setup 
   
-  - Setup PostgreSQL at first : 
+  - Setup the postgreSQL instance at first : 
     
     ```
     cd setup
@@ -41,6 +41,15 @@
 ### Installation
 
   This application can be installed only trough Github Actions and GCKE artifact repository. Trigger the installation procedure when these are ready from making a change to single file inside of the \service-folder.
+
+  After github actions has run successfully, build table structures running locally next commands:
+    
+```
+    cd \service\db-init
+    kubectl apply -f db-init-sqö.yaml
+    kubectl apply -f db-init-job.yaml
+```
+    
 
 ### The Task setup and verifying it:
 
