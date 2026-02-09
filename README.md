@@ -9,7 +9,7 @@
     - \cutlass-backend The API layer. Handles and stores todo's. Limit max todo length to 140 chars.
     - \cutlass-feeder : Go project to fetch a random wiki page and store it toto system
     - manifests      Kubernetes files to install and set up the project to the cluster  
-  - \backup    Backup cronjob related files
+  - \backup         Backup cronjob related files
     - cutlass-backup    Docker image for the backup cronjob manifest
   - \setup     PostgreSQL and database initializing files
 
@@ -17,7 +17,7 @@
 
   Setup at first GCKE cluster with Gateway API support. e2-small with two nodes should be sufficient
   
-### Postgresql setup 
+### PostgreSQL setup 
   
   - Setup the postgreSQL instance at first : 
     
