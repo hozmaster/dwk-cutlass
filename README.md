@@ -19,7 +19,7 @@
   
 ### PostgreSQL setup 
   
-  - Set up the postgreSQL instance to K8s cluster at first : 
+  - Set up the postgreSQL instance and needed database and tables to K8s cluster at first : 
     
     ```
     cd setup
@@ -35,21 +35,8 @@
      postgres=# \du
     ```    
 
-    Now there should be database called as cutlass and proper user name and roles has created.
+    Now there should be database called 'cutlass' and proper username and roles has created for the service.
 
-### Installation
+### Service installation
 
-  This application can be installed only trough GitHub Actions and GCKE artifact repository. Trigger the installation procedure when these are ready from making a change to single file inside of the \service-folder.
-
-  After GitHub actions has run successfully, build table structures running locally next commands:
-    
-```
-    cd \service\db-init
-    kubectl apply -f table-structure-sql.yaml
-    kubectl apply -f table-structure-job.yaml
-```
-    
-
-### The task setup and verifying it:
-
-    You find the command `kubectl top pods -n project/postgres` useful.
+    You need setup GKE cluster to to allow Github Actions to build and install the service.

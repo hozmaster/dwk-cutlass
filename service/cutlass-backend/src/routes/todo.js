@@ -15,7 +15,7 @@ router.post('/todos',  express.json(), async (req, res) => {
         let statusCode = 200;
         if (todo.length > 0 && todo.length < 141) {
             await insertTodo(req.body.todo);
-            console.log("backend: Added.");
+            console.log("backend: A new todo has added.");
         } else  {
             console.log("backend: Too big or nothing sent as a action. Please try again.");
             statusCode = 422;

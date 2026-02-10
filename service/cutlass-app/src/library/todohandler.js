@@ -9,6 +9,7 @@ const getAllTodos = async () => {
         },
         url: service_url + '/todos',
     }).catch(error => {
+        console.log('Fetching todos failed : ');
         console.log(error);
     });
     let data = '[]';
