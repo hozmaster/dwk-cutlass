@@ -1,7 +1,7 @@
 
-# Exercise 3.12 The project, step 20 (Resources and limits)
+# Exercise 3.12 The project, step 20 (Setup logging)
 
- Task: Set sensible resource requests and limits for the project.
+ Task: Setup logging for the project in GKE.
 
 ## Folders
   - \services       Contains base applications for the cutlass-project   
@@ -33,24 +33,27 @@
     
      postgres=# \l
      postgres=# \du
-    ```    
+    ```
 
     Now there should be database called 'cutlass' and proper username and roles has created for the service.
 
 ### Service installation
 
-    You need setup GKE cluster to to allow Github Actions to build and install the service.
+You need setup GKE cluster to allow Github Actions to build and install the service.
+
+### Task info 
+
+See images from inside the [screenshots](./screenshots) folder 
 
 ### Logging
 
-# Enable system logs 
+*Enable system logs* 
 ```
 gcloud container clusters update my-cluster \
 --logging=SYSTEM
 ```
 
-
-# Disable logging 
+*Disable logging* 
 ```
 gcloud container clusters update my-cluster \
---logging=SYSTEM
+--logging=NONE

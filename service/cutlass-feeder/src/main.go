@@ -11,8 +11,6 @@ import (
 
 type EnvKey string
 
-const TAG = "cutlass-feeder - "
-
 func getBackendHost() string {
 	var host = os.Getenv("TODO_BACKEND_HOST")
 	if len(strings.TrimSpace(host)) == 0 {
@@ -55,12 +53,12 @@ func createNewTodo(action string) {
 }
 
 func main() {
-    log.Println(TAG + "start process ")
+    log.Println("Start the process ")
 	client := &http.Client{
 		Transport: &http.Transport{},
 	}
 
-    log.Println(TAG + "fetch a new random article from the wikipedia ")
+    log.Println("fetch a new random article from the wikipedia")
 	req, err := http.NewRequest("GET", "https://en.wikipedia.org/w/api.php?action=query&list=random&rnnamespace=0&rnlimit=1&format=json", nil)
 	if err != nil {
 		log.Fatal(err)
@@ -75,18 +73,18 @@ func main() {
 	}
 
 	defer resp.Body.Close()
-    log.Println(TAG + "fetch finished ")
+    log.Println("Fetch finished")
 
 	if err := json.NewDecoder(resp.Body).Decode(&data); err != nil {
 		log.Fatal(err)
 	}
 
 	if len(data.Query.Random) > 0 {
-       log.Println(TAG + "add the url to db ")
+       log.Println("Add the url to db ")
 		title := data.Query.Random[0].Title
 		url := "https://en.wikipedia.org/wiki/" + strings.ReplaceAll(title, " ", "_")
 		var action = "Read " + url
 		createNewTodo(action)
 	}
-    log.Println(TAG + "end fetch process ")
+    log.Println("end fetch process ")
 }
