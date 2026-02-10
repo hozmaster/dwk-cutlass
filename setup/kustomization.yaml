@@ -6,7 +6,5 @@ resources:
   - manifests/secret.yaml
   - manifests/service.yaml
   - manifests/stateful.yaml
-  - db-init/database-init-sql.yaml
-  - db-init/database-init-job.yaml
-  - ../service/db/db-init-sql.yaml
-  - ../service/db/db-init-job.yaml
+  - db-init/cutlass-db-init-sql.yaml
+  - db-init/cutlass-db-init-job.yaml

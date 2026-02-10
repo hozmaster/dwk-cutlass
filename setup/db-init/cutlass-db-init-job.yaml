@@ -26,12 +26,12 @@ spec:
           valueFrom:
             configMapKeyRef:
               name: postgres-cm
-              key: postgres_db
+              key: POSTGRES_DB
         - name: PG_USERNAME
           valueFrom:
             configMapKeyRef:
               name: postgres-cm
-              key: postgres_user
+              key: POSTGRES_USER
       volumeMounts:
         - name: sql
           mountPath: /sql

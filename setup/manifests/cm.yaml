@@ -4,8 +4,8 @@ metadata:
   name: postgres-cm
   namespace: postgres
 data:
-  postgres_db: postgresdb
-  postgres_user: admin
+  POSTGRES_DB: postgresdb
+  POSTGRES_USER: admin
   pg_hba.conf: |
     local   all             all                                    trust
     host    all             all             all                    scram-sha-256

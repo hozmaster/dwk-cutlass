@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: db-create-tables-task
+  name: table-structure-init-job
   namespace: project
 spec:
   containers:
@@ -39,4 +39,4 @@ spec:
   volumes:
     - name: sql
       configMap:
-        name: db-create-tables-sqls
+        name: table-structure-init-sqls

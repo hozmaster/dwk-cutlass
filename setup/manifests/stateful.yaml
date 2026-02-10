@@ -5,7 +5,7 @@ metadata:
   namespace: postgres
 spec:
   serviceName: postgres-svc
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: postgres
@@ -23,7 +23,7 @@ spec:
               containerPort: 5432
           envFrom:
             - configMapRef:
-                name: postgres-config
+                name: postgres-cm
           env:
             - name: POSTGRES_PASSWORD
               valueFrom:

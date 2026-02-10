@@ -13,23 +13,4 @@ const gPool = new Pool({
     port: 5432,
 });
 
-const setupDatabase = async () => {
-    const client = await gPool.connect();
-    const res = await gPool.query(`SELECT datname
-                                  FROM pg_catalog.pg_database
-                                  WHERE datname = '${DB_NAME}'`);
-    if (res.rowCount === 0) {
-        console.log(`${DB_NAME} database not found, creating it.`);
-        await client.query(`CREATE DATABASE "${DB_NAME}";`);
-        console.log(`${DB_NAME} database not found, creating it.`);
-    } else {
-        console.log(`${DB_NAME} database already exists.`);
-    }
-    try {
-        await client.query(createTodoTable)
-    } catch (error) {
-        console.log(error);
-    }
-}
-
-module.exports = {setupDatabase, gPool};
+module.exports = {gPool};

@@ -15,11 +15,11 @@
 
 ### GKE setup
 
-  Setup at first GCKE cluster with Gateway API support. e2-small with two nodes should be sufficient
+  Setup at first GCKE cluster with Gateway API support. e2-micro or e2-small with two nodes should be sufficient
   
 ### PostgreSQL setup 
   
-  - Setup the postgreSQL instance at first : 
+  - Set up the postgreSQL instance to K8s cluster at first : 
     
     ```
     cd setup
@@ -27,19 +27,19 @@
     ``` 
     
     Login to a running to the postgres-svc pod to check status of installation :
-
+    
     ```
      # psql -h postgres-svc -U admin -d postgres
     
      postgres=# \l
      postgres=# \du
-     postgres=# \c cutlass
-     postgres=# \dt
     ```    
+
+    Now there should be database called as cutlass and proper user name and roles has created.
 
 ### Installation
 
-  This application can be installed only trough Github Actions and GCKE artifact repository. Trigger the installation procedure when these are ready from making a change to single file inside of the \service-folder.
+  This application can be installed only trough GitHub Actions and GCKE artifact repository. Trigger the installation procedure when these are ready from making a change to single file inside of the \service-folder.
 
   After GitHub actions has run successfully, build table structures running locally next commands:
     
