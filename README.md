@@ -45,8 +45,8 @@
     
 ```
     cd \service\db-init
-    kubectl apply -f db-init-sql.yaml
-    kubectl apply -f db-init-job.yaml
+    kubectl apply -f table-structure-sql.yaml
+    kubectl apply -f table-structure-job.yaml
 ```
     
 

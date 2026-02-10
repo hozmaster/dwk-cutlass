@@ -8,3 +8,5 @@ resources:
   - manifests/stateful.yaml
   - db-init/cutlass-db-init-sql.yaml
   - db-init/cutlass-db-init-job.yaml
+  - db-init/table-structure-sql.yaml
+  - db-init/table-structure-job.yaml
