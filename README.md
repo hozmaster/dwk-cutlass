@@ -1,5 +1,5 @@
 
-# Exercise 3.11 The project, step 19 (Resources and limits)
+# Exercise 3.12 The project, step 20 (Resources and limits)
 
  Task: Set sensible resource requests and limits for the project.
 
@@ -40,3 +40,17 @@
 ### Service installation
 
     You need setup GKE cluster to to allow Github Actions to build and install the service.
+
+### Logging
+
+# Enable system logs 
+```
+gcloud container clusters update my-cluster \
+--logging=SYSTEM
+```
+
+
+# Disable logging 
+```
+gcloud container clusters update my-cluster \
+--logging=SYSTEM
