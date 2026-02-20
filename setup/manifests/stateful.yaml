@@ -32,7 +32,7 @@ spec:
                   key: admin-password
           volumeMounts:
             - name: pgdata
-              mountPath: /data
+              mountPath: /var/lib/postgresql
       resources:
         requests:
           cpu: "250m"
