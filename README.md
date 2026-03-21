@@ -31,7 +31,6 @@ it's working and connected to a database.
     
     ```
      # psql -h postgres-svc -U admin -d postgres
-    
      postgres=# \l
      postgres=# \du
     ```
