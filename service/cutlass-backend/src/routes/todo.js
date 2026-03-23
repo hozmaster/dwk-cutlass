@@ -41,4 +41,17 @@ router.get('/todos', async (req, res) => {
     res.json(JSON.stringify(result));
 });
 
+router.get('healthZ', async (req, res) => {
+    console.log('get /healthZ');
+    try {
+        const todos = await getAllTodos();
+        if (todos) {
+            res.sendStatus(200);
+        }
+    } catch (e) {
+        console.error(e);
+        res.sendStatus(503);
+    }
+});
+
 module.exports = router;
