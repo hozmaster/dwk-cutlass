@@ -24,6 +24,10 @@ jobs:
     name: Build, Publish and Deploy
     runs-on: ubuntu-latest
     steps:
+      - name: Setup sops
+        uses: nhedger/setup-sops@v2
+      - name: Setup age
+        uses: alessiodionisi/setup-age-action@v1
       - name: Checkout
         uses: actions/checkout@v4
       - uses: google-github-actions/auth@v2
@@ -48,7 +52,11 @@ jobs:
         run: echo "IMAGE_BCK_TAG=$REGISTRY/$PROJECT_ID/$REPOSITORY_BCK/$IMAGE_BCK:$BRANCH-$GITHUB_SHA" >> $GITHUB_ENV
       - name: 'Form the image names FDR'
         run: echo "IMAGE_FDR_TAG=$REGISTRY/$PROJECT_ID/$REPOSITORY_FDR/$IMAGE_FDR:$BRANCH-$GITHUB_SHA" >> $GITHUB_ENV
-
+      - name: Decrypt secrets
+        env:
+          SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
+        run: |
+          sops -d ./service/maninfests/secret.enc.yaml > ./service/maninfests/secret.yaml
       - name: Build
         run: |
           docker build --tag $IMAGE_APP_TAG service/cutlass-app        
