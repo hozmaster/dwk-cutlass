@@ -57,7 +57,7 @@ jobs:
         env:
           SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
         run: |
-          sops -d ./service/maninfests/secret.enc.yaml > ./service/maninfests/secret.yaml
+          sops -d ./service/manifests/secret.enc.yaml > ./service/manifests/secret.yaml
       - name: Build
         run: |
           docker build --tag $IMAGE_APP_TAG service/cutlass-app        
