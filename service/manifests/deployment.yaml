@@ -107,12 +107,12 @@ spec:
               path: /healthZ
               scheme: HTTP
             initialDelaySeconds: 60
-      resources:
-        requests:
-          memory: "25Mi"
-          cpu: "250m"
-        limits:
-          cpu: "150m"
-          memory: "100Mi"
+#      resources:
+#        requests:
+#          memory: "25Mi"
+#          cpu: "250m"
+#       limits:
+#          cpu: "150m"
+#          memory: "100Mi"
       restartPolicy: Always
       
