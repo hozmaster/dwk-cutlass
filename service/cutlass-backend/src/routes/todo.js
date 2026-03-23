@@ -6,7 +6,7 @@ const {insertTodo, getAllTodos} = require("../library/todo");
 // Listen incoming post request
 router.get('/', async (req, res) => {
     console.log('get /');
-    res.status(200).send(``);
+    res.status(200).send();
 });
 
 // Listen incoming post request
@@ -18,7 +18,6 @@ router.post('/todos', express.json(), async (req, res) => {
         const todo = req.body.todo;
         if (todo.length > 0 && todo.length < 141) {
             await insertTodo(req.body.todo);
-            console.log("backend: A new todo has added.");
         } else {
             statusText = 'backend: Too big or nothing sent as a action. Please try again.'
             statusCode = 422;
@@ -28,7 +27,6 @@ router.post('/todos', express.json(), async (req, res) => {
         statusText = 'Invalid input data';
         statusCode = 400;
     }
-    console.log(statusCode + ' : ' + statusText);
     res.status(statusCode).send({"status": statusText});
 });
 
@@ -41,6 +39,19 @@ router.get('/todos', async (req, res) => {
         console.error(e);
     }
     res.json(JSON.stringify(result));
+});
+
+router.get('healthZ', async (req, res) => {
+    console.log('get /healthZ');
+    try {
+        const todos = await getAllTodos();
+        if (todos) {
+            res.sendStatus(200);
+        }
+    } catch (e) {
+        console.error(e);
+        res.sendStatus(503);
+    }
 });
 
 module.exports = router;

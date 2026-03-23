@@ -1,7 +1,8 @@
 
-# Exercise 3.12 The project, step 20 (Setup logging)
+# Exercise 4.2 The project, step 21 
 
- Task: Setup logging for the project in GKE.
+- Create the required probes and endpoint for The Project to ensure that
+it's working and connected to a database.
 
 ## Folders
   - \services       Contains base applications for the cutlass-project   
@@ -30,7 +31,6 @@
     
     ```
      # psql -h postgres-svc -U admin -d postgres
-    
      postgres=# \l
      postgres=# \du
     ```
