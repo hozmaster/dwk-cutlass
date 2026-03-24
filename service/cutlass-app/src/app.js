@@ -28,4 +28,22 @@ app.use('/', async (req, res, next) => {
     next();
 });
 
+app.get('/healthz', async (req, res) => {
+    // Rude, but should enough to work for health check
+    console.log("healthz");
+    let statusCode = 200;
+    // try {
+    //     const pings = await getPingCounter();
+    //     console.log(pings);
+    //     if (pings === -1) {
+    //         statusCode = 503;
+    //     }
+    // } catch (error)  {
+    //     console.log(error);
+    //     statusCode = 503;
+    // }
+    // console.log("/healthZ code : " + statusCode);
+    res.sendStatus(statusCode);
+})
+
 module.exports = app;

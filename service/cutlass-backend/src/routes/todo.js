@@ -1,6 +1,6 @@
 const express = require('express');
 const router = require('express').Router();
-const {insertTodo, getAllTodos} = require("../library/todo");
+const {insertTodo, getAllTodos, getTodoCount} = require("../library/todo");
 
 
 // Listen incoming post request
@@ -41,8 +41,8 @@ router.get('/todos', async (req, res) => {
     res.json(JSON.stringify(result));
 });
 
-router.get('/healthZ', async (req, res) => {
-    console.log('get /healthZ');
+router.get('/healthz', async (req, res) => {
+    console.log('get /healthz');
     try {
         const todos = await getAllTodos();
         if (todos) {
@@ -53,5 +53,17 @@ router.get('/healthZ', async (req, res) => {
         res.sendStatus(503);
     }
 });
+
+router.get('/todos/count', async (req, res) => {
+    console.log('get /todos/count');
+    let count = -1;
+    try {
+        count = await getTodoCount();
+    } catch (e) {
+        console.error(e);
+        res.sendStatus(503);
+    }
+    res.json(JSON.stringify({"count": count}));
+})
 
 module.exports = router;

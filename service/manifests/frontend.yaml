@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cutlass-app
+  namespace: project
+  labels:
+    app: cutlass-app
+    tier: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cutlass-app
+      tier: frontend
+  template:
+    metadata:
+      name: cutlass-app
+      labels:
+        app: cutlass-app
+        tier: frontend
+    spec:
+      volumes:
+        - name: shared-storage
+          persistentVolumeClaim:
+            claimName: cutlass-pvc
+      containers:
+        - name: cutlass-app
+          image: CUTLASS_APP_IMAGE
+          imagePullPolicy: IfNotPresent
+          volumeMounts: # Mount volume
+            - name: shared-storage
+              mountPath: /usr/src/app/files
+          env:
+            - name: TODO_URL_ADDRESS
+              valueFrom:
+                configMapKeyRef:
+                  name: cutlass-config
+                  key: todo_url_address
+            - name: IPSUM_PIC_SP_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: cutlass-config
+                  key: ipsum_pic_sp_url
+            - name: APP_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: cutlass-config
+                  key: app_port
+          readinessProbe:
+            initialDelaySeconds: 10
+            periodSeconds: 120
+            httpGet:
+              port: 3000
+              path: /healthz
+              scheme: HTTP
+            timeoutSeconds: 3
+            successThreshold: 1
+            failureThreshold: 5

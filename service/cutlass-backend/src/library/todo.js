@@ -9,6 +9,15 @@ const getAllTodos = async () => {
     return result.rows;
 }
 
+const getTodoCount = async () => {
+    const client = await gPool.connect();
+    const countQuery = `select count(*) from todo;`;
+    const result = await client.query(countQuery);
+    const theCount = results.rows[0].count;
+    await client.release(true);
+    return theCount;
+}
+
 const insertTodo = async (action) => {
     const client = await gPool.connect();
     const insertQuery = `
@@ -19,4 +28,4 @@ const insertTodo = async (action) => {
     await client.release(true);
 }
 
-module.exports = {getAllTodos, insertTodo}
+module.exports = {getAllTodos, getTodoCount, insertTodo}

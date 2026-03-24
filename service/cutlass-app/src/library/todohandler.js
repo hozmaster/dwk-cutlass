@@ -18,5 +18,9 @@ const getAllTodos = async () => {
     }
     return JSON.parse(data);
 }
+//
+// const checkHealth = async (req, res) => {
+//
+// }
 
 module.exports = {getAllTodos}
