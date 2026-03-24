@@ -13,7 +13,7 @@ const getTodoCount = async () => {
     const client = await gPool.connect();
     const countQuery = `select count(*) from todo;`;
     const result = await client.query(countQuery);
-    const theCount = results.rows[0].count;
+    const theCount = result.rows[0].count;
     await client.release(true);
     return theCount;
 }
