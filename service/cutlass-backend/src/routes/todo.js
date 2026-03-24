@@ -41,7 +41,7 @@ router.get('/todos', async (req, res) => {
     res.json(JSON.stringify(result));
 });
 
-router.get('healthZ', async (req, res) => {
+router.get('/healthZ', async (req, res) => {
     console.log('get /healthZ');
     try {
         const todos = await getAllTodos();
