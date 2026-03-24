@@ -53,6 +53,7 @@ metadata:
   name: cutlass-backend
   namespace: project
 spec:
+  replicas: 2
   selector:
     matchLabels:
       app: cutlass-app

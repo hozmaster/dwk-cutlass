@@ -9,7 +9,7 @@ data:
     CREATE USER dwkmntair WITH PASSWORD 'verysecret';
   02-create-dbs.sql: |
     CREATE DATABASE cutlass OWNER dwkmntair;
-  02-grant-access-dbs.sql: |
+  03-grant-access-dbs.sql: |
     CREATE ROLE dwkcrud;
     GRANT ALL PRIVILEGES on database cutlass to dwkcrud;
     GRANT dwkcrud TO dwkmntair;
