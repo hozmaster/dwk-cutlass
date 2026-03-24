@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const path = require('path');
-const {getAllTodos} = require('./library/todohandler');
+const {getAllTodos, getTodoCount} = require('./library/todohandler');
 const {isImageOldEnough, base64Encode, fetchImageFile} = require("./library/image");
 
 app.use(express.static(path.join(__dirname, '/public')));
@@ -29,20 +29,12 @@ app.use('/', async (req, res, next) => {
 });
 
 app.get('/healthz', async (req, res) => {
-    // Rude, but should enough to work for health check
     console.log("healthz");
     let statusCode = 200;
-    // try {
-    //     const pings = await getPingCounter();
-    //     console.log(pings);
-    //     if (pings === -1) {
-    //         statusCode = 503;
-    //     }
-    // } catch (error)  {
-    //     console.log(error);
-    //     statusCode = 503;
-    // }
-    // console.log("/healthZ code : " + statusCode);
+    const count = await getTodoCount();
+    if (count === -1) {
+        statusCode = 503;
+    }
     res.sendStatus(statusCode);
 })
 

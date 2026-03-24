@@ -18,9 +18,19 @@ const getAllTodos = async () => {
     }
     return JSON.parse(data);
 }
-//
-// const checkHealth = async (req, res) => {
-//
-// }
 
-module.exports = {getAllTodos}
+const getTodoCount = async () => {
+    const res = await axios({
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        url: service_url + '/todos/count',
+    }).catch(error => {
+        console.log("Reason:" + error);
+        return -1;
+    });
+    return JSON.parse(res.count);
+}
+
+module.exports = {getAllTodos, getTodoCount}
