@@ -1,4 +1,4 @@
-const app = require('./src/app');
+const app =require('./src/app');
 const {initSystem} = require("./src/library/image");
 const PORT = process.env.APP_PORT || 3000;
 

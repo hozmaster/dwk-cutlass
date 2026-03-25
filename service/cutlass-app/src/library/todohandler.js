@@ -19,18 +19,21 @@ const getAllTodos = async () => {
     return JSON.parse(data);
 }
 
-const getTodoCount = async () => {
-    const res = await axios({
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        url: service_url + '/todos/count',
-    }).catch(error => {
-        console.log("Reason:" + error);
-        return -1;
-    });
-    return JSON.parse(res.count);
+const checkBackendHealthy = async () => {
+    let isBackendOk = -1;
+    try {
+        const res = await axios({
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            url: service_url + '/healthz',
+        });
+        isBackendOk = res.status === 200;
+    } catch (e) {
+        console.log(e);
+    }
+    return isBackendOk;
 }
 
-module.exports = {getAllTodos, getTodoCount}
+module.exports = {getAllTodos, checkBackendHealthy}

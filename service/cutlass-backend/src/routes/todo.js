@@ -1,11 +1,10 @@
 const express = require('express');
 const router = require('express').Router();
-const {insertTodo, getAllTodos, getTodoCount} = require("../library/todo");
+const {insertTodo, getAllTodos, getTodoCount, checkIsTableExists} = require("../library/todo");
 
 
 // Listen incoming post request
 router.get('/', async (req, res) => {
-    console.log('get /');
     res.status(200).send();
 });
 
@@ -44,8 +43,8 @@ router.get('/todos', async (req, res) => {
 router.get('/healthz', async (req, res) => {
     console.log('get /healthz');
     try {
-        const todos = await getAllTodos();
-        if (todos) {
+        const exists = await checkIsTableExists();
+        if (exists) {
             res.sendStatus(200);
         }
     } catch (e) {

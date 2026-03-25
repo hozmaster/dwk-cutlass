@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const path = require('path');
-const {getAllTodos, getTodoCount} = require('./library/todohandler');
+const {getAllTodos, checkBackendHealthy} = require('./library/todohandler');
 const {isImageOldEnough, base64Encode, fetchImageFile} = require("./library/image");
 
 app.use(express.static(path.join(__dirname, '/public')));
@@ -19,7 +19,7 @@ app.get('/', async (req, res, next) => {
             ipsumImage: base64Image, todos: todos
         });
 
-        res.on ('finish', async () => {
+        res.on('finish', async () => {
             console.log('finish ')
             const tooOld = isImageOldEnough();
             if (tooOld) {
@@ -36,8 +36,8 @@ app.get('/', async (req, res, next) => {
 app.get('/healthz', async (req, res) => {
     console.log("healthz");
     let statusCode = 200;
-    const count = await getTodoCount();
-    if (count === -1) {
+    const ifOk = await checkBackendHealthy();
+    if (!ifOk) {
         statusCode = 503;
     }
     res.sendStatus(statusCode);

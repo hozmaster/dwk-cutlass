@@ -1,6 +1,20 @@
 const {gPool} = require("../db/database");
 
-const tableName = "todo";
+const checkIsTableExists = async () => {
+    let tableExists = false;
+    // SELECT to_regclass('schema_name.table_name');
+    try {
+        const client = await gPool.connect();
+        const result = await client.query("SELECT to_regclass('public.todo');");
+        await client.release(true);
+        if (result.rows[0].to_regclass) {
+            tableExists = true;
+        }
+    } catch (e) {
+        console.error(e);
+    }
+    return tableExists
+}
 
 const getAllTodos = async () => {
     const client = await gPool.connect();
@@ -11,7 +25,8 @@ const getAllTodos = async () => {
 
 const getTodoCount = async () => {
     const client = await gPool.connect();
-    const countQuery = `select count(*) from todo;`;
+    const countQuery = `select count(*)
+                        from todo;`;
     const result = await client.query(countQuery);
     const theCount = result.rows[0].count;
     await client.release(true);
@@ -28,4 +43,4 @@ const insertTodo = async (action) => {
     await client.release(true);
 }
 
-module.exports = {getAllTodos, getTodoCount, insertTodo}
+module.exports = {getAllTodos, checkIsTableExists, getTodoCount, insertTodo}
