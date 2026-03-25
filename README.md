@@ -33,13 +33,16 @@ it's working and connected to a database.
      # psql -h postgres-svc -U admin -d postgres
      postgres=# \l
      postgres=# \du
+     postgres=# \c cutlass
+     postgres=# \dt
+    
     ```
 
     Now there should be database called 'cutlass' and proper username and roles has created for the service.
 
 ### Service installation
 
-You need setup GKE cluster to allow Github Actions to build and install the service.
+You need setup GKE cluster to allow GitHub Actions to trigger the build and install the service.
 
 ### Task info 
 

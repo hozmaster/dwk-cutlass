@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: db-init-job
+  name: db-setup-job
   namespace: project
 spec:
   ttlSecondsAfterFinished: 86400
@@ -41,4 +41,4 @@ spec:
       volumes:
         - name: sql
           configMap:
-            name: db-init-sql-cm
+            name: db-setup-cm

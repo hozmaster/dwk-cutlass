@@ -4,8 +4,8 @@ resources:
   - manifests/namespace.yaml
   - manifests/cm.yaml
   - manifests/secret.yaml
-  - manifests/db-init/db-init-sql-cm.yaml
-  - manifests/db-init/db-init-job.yaml
+  - manifests/db-init/db-setup-cm.yaml
+  - manifests/db-init/db-setup-job.yaml
   - manifests/pvc.yaml
   - manifests/backend.yaml
   - manifests/frontend.yaml

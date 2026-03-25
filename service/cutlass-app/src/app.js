@@ -11,21 +11,26 @@ app.set('view engine', 'pug')
 app.set('views', path.join(__dirname, 'views'));
 
 app.get('/', async (req, res, next) => {
-    const todos = await getAllTodos();
-    let base64Image = base64Encode();
-    if (base64Image === undefined) {
-        base64Image = null;
-    }
-    res.render('home', {ipsumImage: base64Image, todos: todos})
-    next();
-});
+    console.log('GET /');
+    try {
+        const todos = await getAllTodos();
+        let base64Image = base64Encode() ?? null;
+        res.render('home', {
+            ipsumImage: base64Image, todos: todos
+        });
 
-app.use('/', async (req, res, next) => {
-    const tooOld = isImageOldEnough();
-    if (tooOld) {
-        await fetchImageFile();
+        res.on ('finish', async () => {
+            console.log('finish ')
+            const tooOld = isImageOldEnough();
+            if (tooOld) {
+                await fetchImageFile();
+            }
+        });
+
+    } catch (err) {
+        console.log(err);
+        res.status(500).render('error', {message: 'Something went wrong'});
     }
-    next();
 });
 
 app.get('/healthz', async (req, res) => {

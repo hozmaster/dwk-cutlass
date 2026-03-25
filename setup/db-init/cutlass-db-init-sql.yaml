@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: postgres-init-sql
+  name: cutlass-db-init-sql
   namespace: postgres
 data:
   01-create-users.sql: |
