@@ -1,8 +1,11 @@
 
-# Exercise 4.2 The project, step 21 
+# Exercise 4.5 The project, step 22
 
-- Create the required probes and endpoint for The Project to ensure that
-it's working and connected to a database.
+- Our todo application could use "Done" teld for
+todos that are already done. It should be a PUT request to /todos/
+<id>
+
+After this exercise, your app could look something like this:
 
 ## Folders
   - \services       Contains base applications for the cutlass-project   

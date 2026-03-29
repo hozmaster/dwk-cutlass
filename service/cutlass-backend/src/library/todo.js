@@ -16,9 +16,21 @@ const checkIsTableExists = async () => {
     return tableExists
 }
 
+const markTodoAsDone = async (todoId) => {
+    const client = await gPool.connect();
+    const updateQuery = `
+        UPDATE todo
+        set done = true
+        where id = ($1); `;
+    const results = await client.query(updateQuery, [todoId]);
+    let findTodo = !!results.rowCount;
+    await client.release(true);
+    return findTodo;
+}
+
 const getAllTodos = async () => {
     const client = await gPool.connect();
-    const result = await client.query('SELECT id, action FROM todo');
+    const result = await client.query('SELECT id, action, done FROM todo');
     await client.release(true);
     return result.rows;
 }
@@ -43,4 +55,5 @@ const insertTodo = async (action) => {
     await client.release(true);
 }
 
-module.exports = {getAllTodos, checkIsTableExists, getTodoCount, insertTodo}
+
+module.exports = {markTodoAsDone, getAllTodos, checkIsTableExists, getTodoCount, insertTodo}
