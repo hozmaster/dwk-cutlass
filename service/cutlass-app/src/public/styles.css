@@ -80,6 +80,10 @@ body {
     border-bottom: 1px solid #eee;
 }
 
+.todo-list li button{
+    margin-left: 5px;
+}
+
 .todo-list li:last-child {
     border-bottom: none;
 }

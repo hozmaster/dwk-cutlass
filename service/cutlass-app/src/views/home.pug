@@ -8,6 +8,15 @@ block content
         input(type="text" maxlength=140 placeholder="Todo ..." id="myInput")
         button(type="button") Insert
 
+    h3 Todo
     ul.todo-list#todos
-        each item in todos
-            li= item.action
+        each item in todos.pending
+            li(data-id=item.id)
+              = item.action
+              button.mark_done-btn(data-id=item.id) Mark as done
+
+    h3 Ready
+    ul.todo-list#todos
+        each item in todos.done
+            li(data-id=item.id)
+                = item.action

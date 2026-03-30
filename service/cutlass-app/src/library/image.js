@@ -17,6 +17,7 @@ const isImageOldEnough  = () => {
             isTooOld = true;
         }
     } catch (error) {
+        console.log(error);
     }
     return isTooOld;
 }

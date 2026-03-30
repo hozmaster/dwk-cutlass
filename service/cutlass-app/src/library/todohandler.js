@@ -1,5 +1,5 @@
 const axios = require("axios");
-const service_url = process.env.TODO_URL_ADDRESS;
+const service_url = process.env.TODO_URL_ADDRESS || 'http://localhost:3010';
 
 const getAllTodos = async () => {
     const res = await axios({
@@ -12,11 +12,24 @@ const getAllTodos = async () => {
         console.log('Fetching todos failed : ');
         console.log(error);
     });
-    let data = '[]';
+
+    let rawData = [];
     if (res && res.data !== undefined) {
-        data = res.data;
+        rawData = JSON.parse(res.data);
     }
-    return JSON.parse(data);
+
+    const doneTodos = rawData.filter((todo) => {
+        return todo.done === true;
+    });
+
+    const pendingTodos = rawData.filter((todo) => {
+        return todo.done !== true;
+    });
+
+    return {
+        done: doneTodos,
+        pending: pendingTodos
+    };
 }
 
 const checkBackendHealthy = async () => {
