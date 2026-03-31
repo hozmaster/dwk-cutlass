@@ -1,7 +1,7 @@
 
 # Exercise 4.5 The project, step 22
 
-- Our todo application could use "Done" teld for
+- Our todo application could use "Done" field for
 todos that are already done. It should be a PUT request to /todos/
 <id>
 
@@ -27,6 +27,7 @@ After this exercise, your app could look something like this:
     
     ```
     cd setup
+    sops -d manifetsts\secret.enc.yaml > manifetsts\secret.yaml   
     kustomize build . | kubectl apply -f - 
     ``` 
     
@@ -46,6 +47,22 @@ After this exercise, your app could look something like this:
 ### Service installation
 
 You need setup GKE cluster to allow GitHub Actions to trigger the build and install the service.
+
+Find the external URL (Gateway API way)
+
+```bash
+ kubectl get gateway cutlass-gateway -n project -o jsonpath='{.status.addresses[0].value} `
+``` 
+
+Example output you might see:
+
+```bash
+Addresses:
+  Value:  34.118.XX.XX
+```
+
+Then open:
+- http://34.118.XX.XX/
 
 ### Task info 
 
