@@ -22,6 +22,7 @@ document.querySelector('.input-group button').addEventListener('click', async fu
 });
 
 document.getElementById('todos').addEventListener('click', (e) => {
+    console.log("document.getElementById");
     if (e.target.classList.contains('mark_done-btn')) {
         const id = e.target.dataset.id;
         markTodoDone(id).then(r => {});
@@ -34,9 +35,6 @@ async function markTodoDone(todoId) {
     if (todoId) {
         const response = await fetch('/todos/' + todoId, {
             method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-            }
         });
         console.log(response);
     }

@@ -20,11 +20,11 @@ app.get('/', async (req, res, next) => {
         });
 
         res.on('finish', async () => {
-            console.log('finish ')
-            // const tooOld = isImageOldEnough();
-            // if (tooOld) {
-            //     await fetchImageFile();
-            // }
+            const tooOld = isImageOldEnough();
+            if (tooOld) {
+                await fetchImageFile();
+            }
+            console.log('image check finished')
         });
 
     } catch (err) {
